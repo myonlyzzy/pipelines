@@ -13,8 +13,9 @@ spec:
       labels:
         app: ml-pipeline-ui
     spec:
+      hostNetwork: true
       containers:
-      - image: gcr.io/ml-pipeline/frontend:dummy
+      - image: myonlyzzy/frontend:dummy
         imagePullPolicy: IfNotPresent
         name: ml-pipeline-ui
         ports:

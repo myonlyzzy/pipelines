@@ -34,5 +34,5 @@ spec:
           subPath: minio
       volumes:
       - name: data
-        persistentVolumeClaim:
-          claimName: minio-pvc
+        hostPath:
+          path: /mnt/disk1/minioData

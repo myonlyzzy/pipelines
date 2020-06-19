@@ -13,6 +13,7 @@ spec:
       labels:
         app: ml-pipeline
     spec:
+      hostNetwork: true
       containers:
       - env:
         - name: POD_NAMESPACE
@@ -48,7 +49,7 @@ spec:
             configMapKeyRef:
               name: mysql-configmap
               key: port
-        image: gcr.io/ml-pipeline/api-server:dummy
+        image: myonlyzzy/api-server:dummy
         imagePullPolicy: IfNotPresent
         name: ml-pipeline-api-server
         ports:
