@@ -87,7 +87,7 @@ class ApiParameter(object):
 
 
         :param name: The name of this ApiParameter.  # noqa: E501
-        :type name: str
+        :type: str
         """
 
         self._name = name
@@ -108,7 +108,7 @@ class ApiParameter(object):
 
 
         :param value: The value of this ApiParameter.  # noqa: E501
-        :type value: str
+        :type: str
         """
 
         self._value = value

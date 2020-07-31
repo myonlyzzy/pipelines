@@ -514,8 +514,6 @@ spec:
         - env:
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
-            - name: TTL_SECONDS_AFTER_WORKFLOW_FINISH
-              value: "86400"
           image: {{ .Values.images.persistenceagent }}
           imagePullPolicy: IfNotPresent
           name: ml-pipeline-persistenceagent
@@ -705,27 +703,20 @@ spec:
     spec:
       containers:
         - env:
-            {{ if .Values.managedstorage.enabled }}
-            - name: HAS_DEFAULT_BUCKET
-              value: "true"
-            - name: BUCKET_NAME
-              value: "{{ .Values.managedstorage.gcsBucketName }}"
-            {{ else }}
             - name: HAS_DEFAULT_BUCKET
               valueFrom:
                 configMapKeyRef:
-                  name: "{{ .Values.gcpDefaultConfigName }}"
+                  name: {{ .Values.gcpDefaultConfigName}}
                   key: "has_default_bucket"
             - name: BUCKET_NAME
               valueFrom:
                 configMapKeyRef:
-                  name: "{{ .Values.gcpDefaultConfigName }}"
+                  name: {{ .Values.gcpDefaultConfigName}}
                   key: "bucket_name"
-            {{ end }}
             - name: PROJECT_ID
               valueFrom:
                 configMapKeyRef:
-                  name: "{{ .Values.gcpDefaultConfigName }}"
+                  name: {{ .Values.gcpDefaultConfigName}}
                   key: "project_id"
             - name: POD_NAMESPACE
               valueFrom:
@@ -737,7 +728,7 @@ spec:
               value: "false"
             {{ if .Values.managedstorage.enabled }}
             - name: OBJECTSTORECONFIG_BUCKETNAME
-              value: "{{ .Values.managedstorage.gcsBucketName }}"
+              value: '{{ tpl .Values.managedstorage.gcsBucketName . }}'
             - name: DBCONFIG_DBNAME
               {{ if .Values.managedstorage.databaseNamePrefix }}
               value: '{{ .Values.managedstorage.databaseNamePrefix }}_pipeline'

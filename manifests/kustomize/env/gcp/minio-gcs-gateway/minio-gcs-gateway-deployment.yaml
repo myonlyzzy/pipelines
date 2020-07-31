@@ -15,7 +15,6 @@ spec:
       labels:
         app: minio
     spec:
-      serviceAccountName: kubeflow-pipelines-minio-gcs-gateway
       containers:
         - name: minio
           image: gcr.io/ml-pipeline/minio:RELEASE.2019-08-14T20-37-41Z-license-compliance
@@ -30,14 +29,8 @@ spec:
                   name: pipeline-install-config
                   key: gcsProjectId
             - name: MINIO_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: mlpipeline-minio-artifact
-                  key: accesskey
+              value: "minio"
             - name: MINIO_SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: mlpipeline-minio-artifact
-                  key: secretkey
+              value: "minio123"
           ports:
             - containerPort: 9000

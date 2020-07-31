@@ -55,18 +55,13 @@ class PipelineUploadServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.upload_pipeline(uploadfile, async_req=True)
         >>> result = thread.get()
 
-        :param uploadfile: The pipeline to upload. Maximum size of 32MB is supported. (required)
-        :type uploadfile: file
-        :param name:
-        :type name: str
-        :param description:
-        :type description: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param file uploadfile: The pipeline to upload. Maximum size of 32MB is supported. (required)
+        :param str name:
+        :param str description:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -74,10 +69,9 @@ class PipelineUploadServiceApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: ApiPipeline
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: ApiPipeline
         """
         kwargs['_return_http_data_only'] = True
         return self.upload_pipeline_with_http_info(uploadfile, **kwargs)  # noqa: E501
@@ -87,33 +81,25 @@ class PipelineUploadServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.upload_pipeline_with_http_info(uploadfile, async_req=True)
         >>> result = thread.get()
 
-        :param uploadfile: The pipeline to upload. Maximum size of 32MB is supported. (required)
-        :type uploadfile: file
-        :param name:
-        :type name: str
-        :param description:
-        :type description: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param file uploadfile: The pipeline to upload. Maximum size of 32MB is supported. (required)
+        :param str name:
+        :param str description:
         :param _return_http_data_only: response data without head status code
                                        and headers
-        :type _return_http_data_only: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: tuple(ApiPipeline, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(ApiPipeline, status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()
@@ -195,18 +181,13 @@ class PipelineUploadServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.upload_pipeline_version(uploadfile, async_req=True)
         >>> result = thread.get()
 
-        :param uploadfile: The pipeline to upload. Maximum size of 32MB is supported. (required)
-        :type uploadfile: file
-        :param name:
-        :type name: str
-        :param pipelineid:
-        :type pipelineid: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param file uploadfile: The pipeline to upload. Maximum size of 32MB is supported. (required)
+        :param str name:
+        :param str pipelineid:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -214,10 +195,9 @@ class PipelineUploadServiceApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: ApiPipelineVersion
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: ApiPipelineVersion
         """
         kwargs['_return_http_data_only'] = True
         return self.upload_pipeline_version_with_http_info(uploadfile, **kwargs)  # noqa: E501
@@ -227,33 +207,25 @@ class PipelineUploadServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.upload_pipeline_version_with_http_info(uploadfile, async_req=True)
         >>> result = thread.get()
 
-        :param uploadfile: The pipeline to upload. Maximum size of 32MB is supported. (required)
-        :type uploadfile: file
-        :param name:
-        :type name: str
-        :param pipelineid:
-        :type pipelineid: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param file uploadfile: The pipeline to upload. Maximum size of 32MB is supported. (required)
+        :param str name:
+        :param str pipelineid:
         :param _return_http_data_only: response data without head status code
                                        and headers
-        :type _return_http_data_only: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: tuple(ApiPipelineVersion, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(ApiPipelineVersion, status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()

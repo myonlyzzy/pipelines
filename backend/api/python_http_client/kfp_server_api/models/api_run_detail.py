@@ -87,7 +87,7 @@ class ApiRunDetail(object):
 
 
         :param run: The run of this ApiRunDetail.  # noqa: E501
-        :type run: ApiRun
+        :type: ApiRun
         """
 
         self._run = run
@@ -108,7 +108,7 @@ class ApiRunDetail(object):
 
 
         :param pipeline_runtime: The pipeline_runtime of this ApiRunDetail.  # noqa: E501
-        :type pipeline_runtime: ApiPipelineRuntime
+        :type: ApiPipelineRuntime
         """
 
         self._pipeline_runtime = pipeline_runtime

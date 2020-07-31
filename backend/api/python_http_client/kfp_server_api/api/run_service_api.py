@@ -55,14 +55,11 @@ class RunServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.archive_run(id, async_req=True)
         >>> result = thread.get()
 
-        :param id: The ID of the run to be archived. (required)
-        :type id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str id: The ID of the run to be archived. (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -70,10 +67,9 @@ class RunServiceApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: object
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: object
         """
         kwargs['_return_http_data_only'] = True
         return self.archive_run_with_http_info(id, **kwargs)  # noqa: E501
@@ -83,29 +79,23 @@ class RunServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.archive_run_with_http_info(id, async_req=True)
         >>> result = thread.get()
 
-        :param id: The ID of the run to be archived. (required)
-        :type id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str id: The ID of the run to be archived. (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
-        :type _return_http_data_only: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: tuple(object, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(object, status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()
@@ -177,14 +167,11 @@ class RunServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.create_run(body, async_req=True)
         >>> result = thread.get()
 
-        :param body: (required)
-        :type body: ApiRun
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param ApiRun body: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -192,10 +179,9 @@ class RunServiceApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: ApiRunDetail
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: ApiRunDetail
         """
         kwargs['_return_http_data_only'] = True
         return self.create_run_with_http_info(body, **kwargs)  # noqa: E501
@@ -205,29 +191,23 @@ class RunServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.create_run_with_http_info(body, async_req=True)
         >>> result = thread.get()
 
-        :param body: (required)
-        :type body: ApiRun
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param ApiRun body: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
-        :type _return_http_data_only: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: tuple(ApiRunDetail, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(ApiRunDetail, status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()
@@ -303,14 +283,11 @@ class RunServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.delete_run(id, async_req=True)
         >>> result = thread.get()
 
-        :param id: The ID of the run to be deleted. (required)
-        :type id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str id: The ID of the run to be deleted. (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -318,10 +295,9 @@ class RunServiceApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: object
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: object
         """
         kwargs['_return_http_data_only'] = True
         return self.delete_run_with_http_info(id, **kwargs)  # noqa: E501
@@ -331,29 +307,23 @@ class RunServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.delete_run_with_http_info(id, async_req=True)
         >>> result = thread.get()
 
-        :param id: The ID of the run to be deleted. (required)
-        :type id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str id: The ID of the run to be deleted. (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
-        :type _return_http_data_only: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: tuple(object, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(object, status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()
@@ -425,14 +395,11 @@ class RunServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.get_run(run_id, async_req=True)
         >>> result = thread.get()
 
-        :param run_id: The ID of the run to be retrieved. (required)
-        :type run_id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str run_id: The ID of the run to be retrieved. (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -440,10 +407,9 @@ class RunServiceApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: ApiRunDetail
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: ApiRunDetail
         """
         kwargs['_return_http_data_only'] = True
         return self.get_run_with_http_info(run_id, **kwargs)  # noqa: E501
@@ -453,29 +419,23 @@ class RunServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.get_run_with_http_info(run_id, async_req=True)
         >>> result = thread.get()
 
-        :param run_id: The ID of the run to be retrieved. (required)
-        :type run_id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str run_id: The ID of the run to be retrieved. (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
-        :type _return_http_data_only: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: tuple(ApiRunDetail, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(ApiRunDetail, status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()
@@ -547,24 +507,16 @@ class RunServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.list_runs(async_req=True)
         >>> result = thread.get()
 
-        :param page_token: A page token to request the next page of results. The token is acquried from the nextPageToken field of the response from the previous ListRuns call or can be omitted when fetching the first page.
-        :type page_token: str
-        :param page_size: The number of runs to be listed per page. If there are more runs than this number, the response message will contain a nextPageToken field you can use to fetch the next page.
-        :type page_size: int
-        :param sort_by: Can be format of \"field_name\", \"field_name asc\" or \"field_name desc\" (Example, \"name asc\" or \"id desc\"). Ascending by default.
-        :type sort_by: str
-        :param resource_reference_key_type: The type of the resource that referred to.
-        :type resource_reference_key_type: str
-        :param resource_reference_key_id: The ID of the resource that referred to.
-        :type resource_reference_key_id: str
-        :param filter: A url-encoded, JSON-serialized Filter protocol buffer (see [filter.proto](https://github.com/kubeflow/pipelines/ blob/master/backend/api/filter.proto)).
-        :type filter: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str page_token: A page token to request the next page of results. The token is acquried from the nextPageToken field of the response from the previous ListRuns call or can be omitted when fetching the first page.
+        :param int page_size: The number of runs to be listed per page. If there are more runs than this number, the response message will contain a nextPageToken field you can use to fetch the next page.
+        :param str sort_by: Can be format of \"field_name\", \"field_name asc\" or \"field_name desc\" (Example, \"name asc\" or \"id desc\"). Ascending by default.
+        :param str resource_reference_key_type: The type of the resource that referred to.
+        :param str resource_reference_key_id: The ID of the resource that referred to.
+        :param str filter: A url-encoded, JSON-serialized Filter protocol buffer (see [filter.proto](https://github.com/kubeflow/pipelines/ blob/master/backend/api/filter.proto)).
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -572,10 +524,9 @@ class RunServiceApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: ApiListRunsResponse
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: ApiListRunsResponse
         """
         kwargs['_return_http_data_only'] = True
         return self.list_runs_with_http_info(**kwargs)  # noqa: E501
@@ -585,39 +536,28 @@ class RunServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.list_runs_with_http_info(async_req=True)
         >>> result = thread.get()
 
-        :param page_token: A page token to request the next page of results. The token is acquried from the nextPageToken field of the response from the previous ListRuns call or can be omitted when fetching the first page.
-        :type page_token: str
-        :param page_size: The number of runs to be listed per page. If there are more runs than this number, the response message will contain a nextPageToken field you can use to fetch the next page.
-        :type page_size: int
-        :param sort_by: Can be format of \"field_name\", \"field_name asc\" or \"field_name desc\" (Example, \"name asc\" or \"id desc\"). Ascending by default.
-        :type sort_by: str
-        :param resource_reference_key_type: The type of the resource that referred to.
-        :type resource_reference_key_type: str
-        :param resource_reference_key_id: The ID of the resource that referred to.
-        :type resource_reference_key_id: str
-        :param filter: A url-encoded, JSON-serialized Filter protocol buffer (see [filter.proto](https://github.com/kubeflow/pipelines/ blob/master/backend/api/filter.proto)).
-        :type filter: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str page_token: A page token to request the next page of results. The token is acquried from the nextPageToken field of the response from the previous ListRuns call or can be omitted when fetching the first page.
+        :param int page_size: The number of runs to be listed per page. If there are more runs than this number, the response message will contain a nextPageToken field you can use to fetch the next page.
+        :param str sort_by: Can be format of \"field_name\", \"field_name asc\" or \"field_name desc\" (Example, \"name asc\" or \"id desc\"). Ascending by default.
+        :param str resource_reference_key_type: The type of the resource that referred to.
+        :param str resource_reference_key_id: The ID of the resource that referred to.
+        :param str filter: A url-encoded, JSON-serialized Filter protocol buffer (see [filter.proto](https://github.com/kubeflow/pipelines/ blob/master/backend/api/filter.proto)).
         :param _return_http_data_only: response data without head status code
                                        and headers
-        :type _return_http_data_only: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: tuple(ApiListRunsResponse, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(ApiListRunsResponse, status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()
@@ -700,18 +640,13 @@ class RunServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.read_artifact(run_id, node_id, artifact_name, async_req=True)
         >>> result = thread.get()
 
-        :param run_id: The ID of the run. (required)
-        :type run_id: str
-        :param node_id: The ID of the running node. (required)
-        :type node_id: str
-        :param artifact_name: The name of the artifact. (required)
-        :type artifact_name: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str run_id: The ID of the run. (required)
+        :param str node_id: The ID of the running node. (required)
+        :param str artifact_name: The name of the artifact. (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -719,10 +654,9 @@ class RunServiceApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: ApiReadArtifactResponse
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: ApiReadArtifactResponse
         """
         kwargs['_return_http_data_only'] = True
         return self.read_artifact_with_http_info(run_id, node_id, artifact_name, **kwargs)  # noqa: E501
@@ -732,33 +666,25 @@ class RunServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.read_artifact_with_http_info(run_id, node_id, artifact_name, async_req=True)
         >>> result = thread.get()
 
-        :param run_id: The ID of the run. (required)
-        :type run_id: str
-        :param node_id: The ID of the running node. (required)
-        :type node_id: str
-        :param artifact_name: The name of the artifact. (required)
-        :type artifact_name: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str run_id: The ID of the run. (required)
+        :param str node_id: The ID of the running node. (required)
+        :param str artifact_name: The name of the artifact. (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
-        :type _return_http_data_only: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: tuple(ApiReadArtifactResponse, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(ApiReadArtifactResponse, status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()
@@ -844,16 +770,12 @@ class RunServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.report_run_metrics(run_id, body, async_req=True)
         >>> result = thread.get()
 
-        :param run_id: Required. The parent run ID of the metric. (required)
-        :type run_id: str
-        :param body: (required)
-        :type body: ApiReportRunMetricsRequest
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str run_id: Required. The parent run ID of the metric. (required)
+        :param ApiReportRunMetricsRequest body: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -861,10 +783,9 @@ class RunServiceApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: ApiReportRunMetricsResponse
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: ApiReportRunMetricsResponse
         """
         kwargs['_return_http_data_only'] = True
         return self.report_run_metrics_with_http_info(run_id, body, **kwargs)  # noqa: E501
@@ -874,31 +795,24 @@ class RunServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.report_run_metrics_with_http_info(run_id, body, async_req=True)
         >>> result = thread.get()
 
-        :param run_id: Required. The parent run ID of the metric. (required)
-        :type run_id: str
-        :param body: (required)
-        :type body: ApiReportRunMetricsRequest
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str run_id: Required. The parent run ID of the metric. (required)
+        :param ApiReportRunMetricsRequest body: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
-        :type _return_http_data_only: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: tuple(ApiReportRunMetricsResponse, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(ApiReportRunMetricsResponse, status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()
@@ -981,14 +895,11 @@ class RunServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.retry_run(run_id, async_req=True)
         >>> result = thread.get()
 
-        :param run_id: The ID of the run to be retried. (required)
-        :type run_id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str run_id: The ID of the run to be retried. (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -996,10 +907,9 @@ class RunServiceApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: object
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: object
         """
         kwargs['_return_http_data_only'] = True
         return self.retry_run_with_http_info(run_id, **kwargs)  # noqa: E501
@@ -1009,29 +919,23 @@ class RunServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.retry_run_with_http_info(run_id, async_req=True)
         >>> result = thread.get()
 
-        :param run_id: The ID of the run to be retried. (required)
-        :type run_id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str run_id: The ID of the run to be retried. (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
-        :type _return_http_data_only: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: tuple(object, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(object, status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()
@@ -1103,14 +1007,11 @@ class RunServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.terminate_run(run_id, async_req=True)
         >>> result = thread.get()
 
-        :param run_id: The ID of the run to be terminated. (required)
-        :type run_id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str run_id: The ID of the run to be terminated. (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -1118,10 +1019,9 @@ class RunServiceApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: object
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: object
         """
         kwargs['_return_http_data_only'] = True
         return self.terminate_run_with_http_info(run_id, **kwargs)  # noqa: E501
@@ -1131,29 +1031,23 @@ class RunServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.terminate_run_with_http_info(run_id, async_req=True)
         >>> result = thread.get()
 
-        :param run_id: The ID of the run to be terminated. (required)
-        :type run_id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str run_id: The ID of the run to be terminated. (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
-        :type _return_http_data_only: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: tuple(object, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(object, status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()
@@ -1225,14 +1119,11 @@ class RunServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.unarchive_run(id, async_req=True)
         >>> result = thread.get()
 
-        :param id: The ID of the run to be restored. (required)
-        :type id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str id: The ID of the run to be restored. (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -1240,10 +1131,9 @@ class RunServiceApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: object
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: object
         """
         kwargs['_return_http_data_only'] = True
         return self.unarchive_run_with_http_info(id, **kwargs)  # noqa: E501
@@ -1253,29 +1143,23 @@ class RunServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.unarchive_run_with_http_info(id, async_req=True)
         >>> result = thread.get()
 
-        :param id: The ID of the run to be restored. (required)
-        :type id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str id: The ID of the run to be restored. (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
-        :type _return_http_data_only: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: tuple(object, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(object, status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()

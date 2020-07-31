@@ -80,9 +80,7 @@ METADATA_WRITTEN_LABEL_KEY = 'pipelines.kubeflow.org/metadata_written'
 
 def output_name_to_argo(name: str) -> str:
     import re
-    # This sanitization code should be kept in sync with the code in the DSL compiler.
-    # See https://github.com/kubeflow/pipelines/blob/39975e3cde7ba4dcea2bca835b92d0fe40b1ae3c/sdk/python/kfp/compiler/_k8s_helper.py#L33
-    return re.sub('-+', '-', re.sub('[^-_0-9A-Za-z]+', '-', name)).strip('-')
+    return re.sub('-+', '-', re.sub('[^-0-9a-z]+', '-', name.lower())).strip('-')
 
 def is_s3_endpoint(endpoint: str) -> bool:
     return re.search('^.*s3.*amazonaws.com.*$', endpoint)
@@ -131,8 +129,6 @@ while True:
         k8s_api.list_namespaced_pod,
         namespace=namespace_to_watch,
         label_selector=ARGO_WORKFLOW_LABEL_KEY,
-        timeout_seconds=1800,  # Sometimes watch gets stuck
-        _request_timeout=2000,  # Sometimes HTTP GET gets stuck
     ):
         try:
             obj = event['object']

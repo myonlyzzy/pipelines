@@ -92,7 +92,7 @@ class ApiPeriodicSchedule(object):
 
 
         :param start_time: The start_time of this ApiPeriodicSchedule.  # noqa: E501
-        :type start_time: datetime
+        :type: datetime
         """
 
         self._start_time = start_time
@@ -113,7 +113,7 @@ class ApiPeriodicSchedule(object):
 
 
         :param end_time: The end_time of this ApiPeriodicSchedule.  # noqa: E501
-        :type end_time: datetime
+        :type: datetime
         """
 
         self._end_time = end_time
@@ -134,7 +134,7 @@ class ApiPeriodicSchedule(object):
 
 
         :param interval_second: The interval_second of this ApiPeriodicSchedule.  # noqa: E501
-        :type interval_second: str
+        :type: str
         """
 
         self._interval_second = interval_second

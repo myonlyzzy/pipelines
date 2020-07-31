@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 
 import kfp
+import json
+import copy
 from kfp import components
 from kfp import dsl
+from kfp.aws import use_aws_secret
 
 sagemaker_workteam_op = components.load_component_from_file(
     "../../workteam/component.yaml"
@@ -17,7 +20,7 @@ def workteam_test(
     region="", team_name="", description="", user_pool="", user_groups="", client_id=""
 ):
 
-    sagemaker_workteam_op(
+    workteam = sagemaker_workteam_op(
         region=region,
         team_name=team_name,
         description=description,

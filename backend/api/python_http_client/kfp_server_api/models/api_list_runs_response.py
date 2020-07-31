@@ -92,7 +92,7 @@ class ApiListRunsResponse(object):
 
 
         :param runs: The runs of this ApiListRunsResponse.  # noqa: E501
-        :type runs: list[ApiRun]
+        :type: list[ApiRun]
         """
 
         self._runs = runs
@@ -115,7 +115,7 @@ class ApiListRunsResponse(object):
         The total number of runs for the given query.  # noqa: E501
 
         :param total_size: The total_size of this ApiListRunsResponse.  # noqa: E501
-        :type total_size: int
+        :type: int
         """
 
         self._total_size = total_size
@@ -138,7 +138,7 @@ class ApiListRunsResponse(object):
         The token to list the next page of runs.  # noqa: E501
 
         :param next_page_token: The next_page_token of this ApiListRunsResponse.  # noqa: E501
-        :type next_page_token: str
+        :type: str
         """
 
         self._next_page_token = next_page_token

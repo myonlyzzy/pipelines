@@ -87,7 +87,7 @@ class ApiResourceKey(object):
 
 
         :param type: The type of this ApiResourceKey.  # noqa: E501
-        :type type: ApiResourceType
+        :type: ApiResourceType
         """
 
         self._type = type
@@ -110,7 +110,7 @@ class ApiResourceKey(object):
         The ID of the resource that referred to.  # noqa: E501
 
         :param id: The id of this ApiResourceKey.  # noqa: E501
-        :type id: str
+        :type: str
         """
 
         self._id = id

@@ -92,7 +92,6 @@ enum SidePaneTab {
 interface SelectedNodeDetails {
   id: string;
   logs?: string;
-  phase?: string;
   phaseMessage?: string;
 }
 
@@ -128,7 +127,6 @@ interface RunDetailsState {
   runMetadata?: ApiRun;
   selectedTab: number;
   selectedNodeDetails: SelectedNodeDetails | null;
-  sidepanelBannerMode: Mode;
   sidepanelBusy: boolean;
   sidepanelSelectedTab: SidePaneTab;
   workflow?: Workflow;
@@ -178,7 +176,6 @@ class RunDetails extends Page<RunDetailsInternalProps, RunDetailsState> {
     runFinished: false,
     selectedNodeDetails: null,
     selectedTab: 0,
-    sidepanelBannerMode: 'warning',
     sidepanelBusy: false,
     sidepanelSelectedTab: SidePaneTab.INPUT_OUTPUT,
     mlmdRunContext: undefined,
@@ -238,7 +235,6 @@ class RunDetails extends Page<RunDetailsInternalProps, RunDetailsState> {
       runFinished,
       runMetadata,
       selectedTab,
-      sidepanelBannerMode,
       selectedNodeDetails,
       sidepanelSelectedTab,
       workflow,
@@ -309,10 +305,7 @@ class RunDetails extends Page<RunDetailsInternalProps, RunDetailsState> {
                         {!!selectedNodeDetails && (
                           <React.Fragment>
                             {!!selectedNodeDetails.phaseMessage && (
-                              <Banner
-                                mode={sidepanelBannerMode}
-                                message={selectedNodeDetails.phaseMessage}
-                              />
+                              <Banner mode='warning' message={selectedNodeDetails.phaseMessage} />
                             )}
                             <div className={commonCss.page}>
                               <MD2Tabs
@@ -456,66 +449,62 @@ class RunDetails extends Page<RunDetailsInternalProps, RunDetailsState> {
                                   </div>
                                 )}
 
-                                {sidepanelSelectedTab === SidePaneTab.POD &&
-                                  selectedNodeDetails.phase !== NodePhase.SKIPPED && (
-                                    <div className={commonCss.page}>
-                                      {selectedNodeId && namespace && (
-                                        <PodInfo name={selectedNodeId} namespace={namespace} />
-                                      )}
-                                    </div>
-                                  )}
+                                {sidepanelSelectedTab === SidePaneTab.POD && (
+                                  <div className={commonCss.page}>
+                                    {selectedNodeId && namespace && (
+                                      <PodInfo name={selectedNodeId} namespace={namespace} />
+                                    )}
+                                  </div>
+                                )}
 
-                                {sidepanelSelectedTab === SidePaneTab.EVENTS &&
-                                  selectedNodeDetails.phase !== NodePhase.SKIPPED && (
-                                    <div className={commonCss.page}>
-                                      {selectedNodeId && namespace && (
-                                        <PodEvents name={selectedNodeId} namespace={namespace} />
-                                      )}
-                                    </div>
-                                  )}
+                                {sidepanelSelectedTab === SidePaneTab.EVENTS && (
+                                  <div className={commonCss.page}>
+                                    {selectedNodeId && namespace && (
+                                      <PodEvents name={selectedNodeId} namespace={namespace} />
+                                    )}
+                                  </div>
+                                )}
 
-                                {sidepanelSelectedTab === SidePaneTab.LOGS &&
-                                  selectedNodeDetails.phase !== NodePhase.SKIPPED && (
-                                    <div className={commonCss.page}>
-                                      {this.state.logsBannerMessage && (
-                                        <React.Fragment>
-                                          <Banner
-                                            message={this.state.logsBannerMessage}
-                                            mode={this.state.logsBannerMode}
-                                            additionalInfo={this.state.logsBannerAdditionalInfo}
-                                            showTroubleshootingGuideLink={false}
-                                            refresh={this._loadSelectedNodeLogs.bind(this)}
+                                {sidepanelSelectedTab === SidePaneTab.LOGS && (
+                                  <div className={commonCss.page}>
+                                    {this.state.logsBannerMessage && (
+                                      <React.Fragment>
+                                        <Banner
+                                          message={this.state.logsBannerMessage}
+                                          mode={this.state.logsBannerMode}
+                                          additionalInfo={this.state.logsBannerAdditionalInfo}
+                                          refresh={this._loadSelectedNodeLogs.bind(this)}
+                                        />
+                                      </React.Fragment>
+                                    )}
+                                    {stackdriverK8sLogsUrl && (
+                                      <div className={padding(12)}>
+                                        Logs can also be viewed in{' '}
+                                        <a
+                                          href={stackdriverK8sLogsUrl}
+                                          target='_blank'
+                                          rel='noopener noreferrer'
+                                          className={classes(css.link, commonCss.unstyled)}
+                                        >
+                                          Stackdriver Kubernetes Monitoring
+                                        </a>
+                                        .
+                                      </div>
+                                    )}
+                                    {!this.state.logsBannerMessage &&
+                                      this.state.selectedNodeDetails && (
+                                        // Overflow hidden here, because scroll is handled inside
+                                        // LogViewer.
+                                        <div className={commonCss.pageOverflowHidden}>
+                                          <LogViewer
+                                            logLines={(
+                                              this.state.selectedNodeDetails.logs || ''
+                                            ).split('\n')}
                                           />
-                                        </React.Fragment>
-                                      )}
-                                      {stackdriverK8sLogsUrl && (
-                                        <div className={padding(12)}>
-                                          Logs can also be viewed in{' '}
-                                          <a
-                                            href={stackdriverK8sLogsUrl}
-                                            target='_blank'
-                                            rel='noopener noreferrer'
-                                            className={classes(css.link, commonCss.unstyled)}
-                                          >
-                                            Stackdriver Kubernetes Monitoring
-                                          </a>
-                                          .
                                         </div>
                                       )}
-                                      {!this.state.logsBannerMessage &&
-                                        this.state.selectedNodeDetails && (
-                                          // Overflow hidden here, because scroll is handled inside
-                                          // LogViewer.
-                                          <div className={commonCss.pageOverflowHidden}>
-                                            <LogViewer
-                                              logLines={(
-                                                this.state.selectedNodeDetails.logs || ''
-                                              ).split('\n')}
-                                            />
-                                          </div>
-                                        )}
-                                    </div>
-                                  )}
+                                  </div>
+                                )}
                               </div>
                             </div>
                           </React.Fragment>
@@ -864,9 +853,6 @@ class RunDetails extends Page<RunDetailsInternalProps, RunDetailsState> {
   private async _loadSidePaneTab(tab: SidePaneTab): Promise<void> {
     const workflow = this.state.workflow;
     const selectedNodeDetails = this.state.selectedNodeDetails;
-
-    let sidepanelBannerMode: Mode = 'warning';
-
     if (workflow && workflow.status && workflow.status.nodes && selectedNodeDetails) {
       const node = workflow.status.nodes[selectedNodeDetails.id];
       if (node) {
@@ -874,25 +860,12 @@ class RunDetails extends Page<RunDetailsInternalProps, RunDetailsState> {
           node && node.message
             ? `This step is in ${node.phase} state with this message: ` + node.message
             : undefined;
-
-        selectedNodeDetails.phase = node.phase;
-
-        switch (node.phase) {
-          // TODO: make distinction between system and pipelines error clear
-          case NodePhase.ERROR:
-          case NodePhase.FAILED:
-            sidepanelBannerMode = 'error';
-            break;
-          default:
-            sidepanelBannerMode = 'info';
-            break;
-        }
       }
-      this.setStateSafe({ selectedNodeDetails, sidepanelSelectedTab: tab, sidepanelBannerMode });
+      this.setStateSafe({ selectedNodeDetails, sidepanelSelectedTab: tab });
 
       switch (tab) {
         case SidePaneTab.LOGS:
-          if (node.phase !== NodePhase.PENDING && node.phase !== NodePhase.SKIPPED) {
+          if (node.phase !== NodePhase.SKIPPED) {
             await this._loadSelectedNodeLogs();
           } else {
             // Clear logs
@@ -904,43 +877,31 @@ class RunDetails extends Page<RunDetailsInternalProps, RunDetailsState> {
 
   private async _loadSelectedNodeLogs(): Promise<void> {
     const selectedNodeDetails = this.state.selectedNodeDetails;
-    const namespace = this.state.workflow?.metadata?.namespace;
-    if (!selectedNodeDetails || !namespace) {
+    if (!selectedNodeDetails) {
       return;
     }
     this.setStateSafe({ sidepanelBusy: true });
-
-    let logsBannerMessage = '';
-    let logsBannerAdditionalInfo = '';
-    let logsBannerMode = '' as Mode;
-
     try {
-      selectedNodeDetails.logs = await Apis.getPodLogs(selectedNodeDetails.id, namespace);
+      const logs = await Apis.getPodLogs(
+        selectedNodeDetails.id,
+        this.state.workflow?.metadata?.namespace,
+      );
+      selectedNodeDetails.logs = logs;
+      this.setStateSafe({
+        logsBannerAdditionalInfo: '',
+        logsBannerMessage: '',
+        selectedNodeDetails,
+      });
     } catch (err) {
-      let errMsg = await errorToMessage(err);
-      logsBannerMessage = 'Failed to retrieve pod logs.';
-
-      if (errMsg === 'pod not found') {
-        logsBannerMessage += this.props.gkeMetadata.projectId
-          ? ' Use Stackdriver Kubernetes Monitoring to view them.'
-          : '';
-        logsBannerMode = 'info';
-        logsBannerAdditionalInfo =
-          'Possible reasons include pod garbage collection, cluster autoscaling and pod preemption. ';
-      } else {
-        logsBannerMode = 'error';
-      }
-
-      logsBannerAdditionalInfo += 'Error response: ' + errMsg;
+      this.setStateSafe({
+        logsBannerMessage:
+          'Warning: failed to retrieve pod logs. Possible reasons include cluster autoscaling or pod preemption',
+        logsBannerAdditionalInfo: await errorToMessage(err),
+        logsBannerMode: 'warning',
+      });
+    } finally {
+      this.setStateSafe({ sidepanelBusy: false });
     }
-
-    this.setStateSafe({
-      sidepanelBusy: false,
-      logsBannerAdditionalInfo,
-      logsBannerMessage,
-      logsBannerMode,
-      selectedNodeDetails,
-    });
   }
 
   private async _onGenerate(
@@ -1149,7 +1110,7 @@ const VisualizationsTabContent: React.FC<{
       ) : (
         <>
           {viewerConfigs.length + generatedVisualizations.length === 0 && (
-            <Banner message='There are no visualizations in this step.' mode='info' />
+            <Banner message='There are no visualizations in this step.' mode='warning' />
           )}
           {[
             ...viewerConfigs,

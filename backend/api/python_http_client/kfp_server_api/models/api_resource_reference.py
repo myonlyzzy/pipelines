@@ -92,7 +92,7 @@ class ApiResourceReference(object):
 
 
         :param key: The key of this ApiResourceReference.  # noqa: E501
-        :type key: ApiResourceKey
+        :type: ApiResourceKey
         """
 
         self._key = key
@@ -115,7 +115,7 @@ class ApiResourceReference(object):
         The name of the resource that referred to.  # noqa: E501
 
         :param name: The name of this ApiResourceReference.  # noqa: E501
-        :type name: str
+        :type: str
         """
 
         self._name = name
@@ -136,7 +136,7 @@ class ApiResourceReference(object):
 
 
         :param relationship: The relationship of this ApiResourceReference.  # noqa: E501
-        :type relationship: ApiRelationship
+        :type: ApiRelationship
         """
 
         self._relationship = relationship

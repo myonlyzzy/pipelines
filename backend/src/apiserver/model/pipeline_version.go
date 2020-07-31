@@ -73,8 +73,3 @@ func (p *PipelineVersion) APIToModelFieldMap() map[string]string {
 func (p *PipelineVersion) GetModelName() string {
 	return "pipeline_versions"
 }
-
-func (p *PipelineVersion) GetFieldValue(name string) interface{} {
-	// TODO(jingzhang36): follow the example of GetFieldValue in run.go
-	return nil
-}

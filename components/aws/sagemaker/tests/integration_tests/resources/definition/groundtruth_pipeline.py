@@ -1,6 +1,9 @@
 import kfp
+import json
+import copy
 from kfp import components
 from kfp import dsl
+from kfp.aws import use_aws_secret
 
 sagemaker_gt_op = components.load_component_from_file(
     "../../ground_truth/component.yaml"
@@ -31,7 +34,7 @@ def ground_truth_test(
     workteam_arn="",
 ):
 
-    sagemaker_gt_op(
+    ground_truth_train = sagemaker_gt_op(
         region=region,
         role=role,
         job_name=ground_truth_train_job_name,

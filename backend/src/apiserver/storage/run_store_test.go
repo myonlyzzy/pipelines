@@ -15,8 +15,6 @@
 package storage
 
 import (
-	"fmt"
-	"sort"
 	"testing"
 
 	sq "github.com/Masterminds/squirrel"
@@ -28,12 +26,6 @@ import (
 	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc/codes"
 )
-
-type RunMetricSorter []*model.RunMetric
-
-func (r RunMetricSorter) Len() int           { return len(r) }
-func (r RunMetricSorter) Less(i, j int) bool { return r[i].Name < r[j].Name }
-func (r RunMetricSorter) Swap(i, j int)      { r[i], r[j] = r[j], r[i] }
 
 func initializeRunStore() (*DB, *RunStore) {
 	db := NewFakeDbOrFatal()
@@ -112,24 +104,6 @@ func initializeRunStore() (*DB, *RunStore) {
 	runStore.CreateRun(run1)
 	runStore.CreateRun(run2)
 	runStore.CreateRun(run3)
-
-	metric1 := &model.RunMetric{
-		RunUUID:     "1",
-		NodeID:      "node1",
-		Name:        "dummymetric",
-		NumberValue: 1.0,
-		Format:      "PERCENTAGE",
-	}
-	metric2 := &model.RunMetric{
-		RunUUID:     "2",
-		NodeID:      "node2",
-		Name:        "dummymetric",
-		NumberValue: 2.0,
-		Format:      "PERCENTAGE",
-	}
-	runStore.ReportMetric(metric1)
-	runStore.ReportMetric(metric2)
-
 	return db, runStore
 }
 
@@ -147,15 +121,6 @@ func TestListRuns_Pagination(t *testing.T) {
 			ScheduledAtInSec: 1,
 			StorageState:     api.Run_STORAGESTATE_AVAILABLE.String(),
 			Conditions:       "Running",
-			Metrics: []*model.RunMetric{
-				{
-					RunUUID:     "1",
-					NodeID:      "node1",
-					Name:        "dummymetric",
-					NumberValue: 1.0,
-					Format:      "PERCENTAGE",
-				},
-			},
 			ResourceReferences: []*model.ResourceReference{
 				{
 					ResourceUUID: "1", ResourceType: common.Run,
@@ -174,15 +139,6 @@ func TestListRuns_Pagination(t *testing.T) {
 			ScheduledAtInSec: 2,
 			StorageState:     api.Run_STORAGESTATE_AVAILABLE.String(),
 			Conditions:       "done",
-			Metrics: []*model.RunMetric{
-				{
-					RunUUID:     "2",
-					NodeID:      "node2",
-					Name:        "dummymetric",
-					NumberValue: 2.0,
-					Format:      "PERCENTAGE",
-				},
-			},
 			ResourceReferences: []*model.ResourceReference{
 				{
 					ResourceUUID: "2", ResourceType: common.Run,
@@ -209,106 +165,6 @@ func TestListRuns_Pagination(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, 2, total_size)
 	assert.Equal(t, expectedSecondPageRuns, runs, "Unexpected Run listed.")
-	assert.Empty(t, nextPageToken)
-}
-
-func TestListRuns_Pagination_WithSortingOnMetrics(t *testing.T) {
-	db, runStore := initializeRunStore()
-	defer db.Close()
-
-	expectedFirstPageRuns := []*model.Run{
-		{
-			UUID:             "1",
-			Name:             "run1",
-			DisplayName:      "run1",
-			Namespace:        "n1",
-			CreatedAtInSec:   1,
-			ScheduledAtInSec: 1,
-			StorageState:     api.Run_STORAGESTATE_AVAILABLE.String(),
-			Conditions:       "Running",
-			Metrics: []*model.RunMetric{
-				{
-					RunUUID:     "1",
-					NodeID:      "node1",
-					Name:        "dummymetric",
-					NumberValue: 1.0,
-					Format:      "PERCENTAGE",
-				},
-			},
-			ResourceReferences: []*model.ResourceReference{
-				{
-					ResourceUUID: "1", ResourceType: common.Run,
-					ReferenceUUID: defaultFakeExpId, ReferenceName: "e1",
-					ReferenceType: common.Experiment, Relationship: common.Creator,
-				},
-			},
-		}}
-	expectedSecondPageRuns := []*model.Run{
-		{
-			UUID:             "2",
-			Name:             "run2",
-			DisplayName:      "run2",
-			Namespace:        "n2",
-			CreatedAtInSec:   2,
-			ScheduledAtInSec: 2,
-			StorageState:     api.Run_STORAGESTATE_AVAILABLE.String(),
-			Conditions:       "done",
-			Metrics: []*model.RunMetric{
-				{
-					RunUUID:     "2",
-					NodeID:      "node2",
-					Name:        "dummymetric",
-					NumberValue: 2.0,
-					Format:      "PERCENTAGE",
-				},
-			},
-			ResourceReferences: []*model.ResourceReference{
-				{
-					ResourceUUID: "2", ResourceType: common.Run,
-					ReferenceUUID: defaultFakeExpId, ReferenceName: "e1",
-					ReferenceType: common.Experiment, Relationship: common.Creator,
-				},
-			},
-		}}
-
-	// Sort in asc order
-	opts, err := list.NewOptions(&model.Run{}, 1, "metric:dummymetric", nil)
-	assert.Nil(t, err)
-
-	runs, total_size, nextPageToken, err := runStore.ListRuns(
-		&common.FilterContext{ReferenceKey: &common.ReferenceKey{Type: common.Experiment, ID: defaultFakeExpId}}, opts)
-	assert.Nil(t, err)
-	assert.Equal(t, 2, total_size)
-	assert.Equal(t, expectedFirstPageRuns, runs, "Unexpected Run listed.")
-	assert.NotEmpty(t, nextPageToken)
-
-	opts, err = list.NewOptionsFromToken(nextPageToken, 1)
-	assert.Nil(t, err)
-	runs, total_size, nextPageToken, err = runStore.ListRuns(
-		&common.FilterContext{ReferenceKey: &common.ReferenceKey{Type: common.Experiment, ID: defaultFakeExpId}}, opts)
-	assert.Nil(t, err)
-	assert.Equal(t, 2, total_size)
-	assert.Equal(t, expectedSecondPageRuns, runs, "Unexpected Run listed.")
-	assert.Empty(t, nextPageToken)
-
-	// Sort in desc order
-	opts, err = list.NewOptions(&model.Run{}, 1, "metric:dummymetric desc", nil)
-	assert.Nil(t, err)
-
-	runs, total_size, nextPageToken, err = runStore.ListRuns(
-		&common.FilterContext{ReferenceKey: &common.ReferenceKey{Type: common.Experiment, ID: defaultFakeExpId}}, opts)
-	assert.Nil(t, err)
-	assert.Equal(t, 2, total_size)
-	assert.Equal(t, expectedSecondPageRuns, runs, "Unexpected Run listed.")
-	assert.NotEmpty(t, nextPageToken)
-
-	opts, err = list.NewOptionsFromToken(nextPageToken, 1)
-	assert.Nil(t, err)
-	runs, total_size, nextPageToken, err = runStore.ListRuns(
-		&common.FilterContext{ReferenceKey: &common.ReferenceKey{Type: common.Experiment, ID: defaultFakeExpId}}, opts)
-	assert.Nil(t, err)
-	assert.Equal(t, 2, total_size)
-	assert.Equal(t, expectedFirstPageRuns, runs, "Unexpected Run listed.")
 	assert.Empty(t, nextPageToken)
 }
 
@@ -363,15 +219,6 @@ func TestListRuns_Pagination_Descend(t *testing.T) {
 			ScheduledAtInSec: 2,
 			StorageState:     api.Run_STORAGESTATE_AVAILABLE.String(),
 			Conditions:       "done",
-			Metrics: []*model.RunMetric{
-				{
-					RunUUID:     "2",
-					NodeID:      "node2",
-					Name:        "dummymetric",
-					NumberValue: 2.0,
-					Format:      "PERCENTAGE",
-				},
-			},
 			ResourceReferences: []*model.ResourceReference{
 				{
 					ResourceUUID: "2", ResourceType: common.Run,
@@ -390,15 +237,6 @@ func TestListRuns_Pagination_Descend(t *testing.T) {
 			ScheduledAtInSec: 1,
 			StorageState:     api.Run_STORAGESTATE_AVAILABLE.String(),
 			Conditions:       "Running",
-			Metrics: []*model.RunMetric{
-				{
-					RunUUID:     "1",
-					NodeID:      "node1",
-					Name:        "dummymetric",
-					NumberValue: 1.0,
-					Format:      "PERCENTAGE",
-				},
-			},
 			ResourceReferences: []*model.ResourceReference{
 				{
 					ResourceUUID: "1", ResourceType: common.Run,
@@ -412,10 +250,6 @@ func TestListRuns_Pagination_Descend(t *testing.T) {
 	assert.Nil(t, err)
 	runs, total_size, nextPageToken, err := runStore.ListRuns(
 		&common.FilterContext{ReferenceKey: &common.ReferenceKey{Type: common.Experiment, ID: defaultFakeExpId}}, opts)
-
-	for _, run := range runs {
-		fmt.Printf("%+v\n", run)
-	}
 
 	assert.Nil(t, err)
 	assert.Equal(t, 2, total_size)
@@ -446,15 +280,6 @@ func TestListRuns_Pagination_LessThanPageSize(t *testing.T) {
 			ScheduledAtInSec: 1,
 			StorageState:     api.Run_STORAGESTATE_AVAILABLE.String(),
 			Conditions:       "Running",
-			Metrics: []*model.RunMetric{
-				{
-					RunUUID:     "1",
-					NodeID:      "node1",
-					Name:        "dummymetric",
-					NumberValue: 1.0,
-					Format:      "PERCENTAGE",
-				},
-			},
 			ResourceReferences: []*model.ResourceReference{
 				{
 					ResourceUUID: "1", ResourceType: common.Run,
@@ -472,15 +297,6 @@ func TestListRuns_Pagination_LessThanPageSize(t *testing.T) {
 			ScheduledAtInSec: 2,
 			StorageState:     api.Run_STORAGESTATE_AVAILABLE.String(),
 			Conditions:       "done",
-			Metrics: []*model.RunMetric{
-				{
-					RunUUID:     "2",
-					NodeID:      "node2",
-					Name:        "dummymetric",
-					NumberValue: 2.0,
-					Format:      "PERCENTAGE",
-				},
-			},
 			ResourceReferences: []*model.ResourceReference{
 				{
 					ResourceUUID: "2", ResourceType: common.Run,
@@ -525,15 +341,6 @@ func TestGetRun(t *testing.T) {
 			ScheduledAtInSec: 1,
 			StorageState:     api.Run_STORAGESTATE_AVAILABLE.String(),
 			Conditions:       "Running",
-			Metrics: []*model.RunMetric{
-				{
-					RunUUID:     "1",
-					NodeID:      "node1",
-					Name:        "dummymetric",
-					NumberValue: 1.0,
-					Format:      "PERCENTAGE",
-				},
-			},
 			ResourceReferences: []*model.ResourceReference{
 				{
 					ResourceUUID: "1", ResourceType: common.Run,
@@ -582,15 +389,6 @@ func TestCreateOrUpdateRun_UpdateSuccess(t *testing.T) {
 			ScheduledAtInSec: 1,
 			StorageState:     api.Run_STORAGESTATE_AVAILABLE.String(),
 			Conditions:       "Running",
-			Metrics: []*model.RunMetric{
-				{
-					RunUUID:     "1",
-					NodeID:      "node1",
-					Name:        "dummymetric",
-					NumberValue: 1.0,
-					Format:      "PERCENTAGE",
-				},
-			},
 			ResourceReferences: []*model.ResourceReference{
 				{
 					ResourceUUID: "1", ResourceType: common.Run,
@@ -628,15 +426,6 @@ func TestCreateOrUpdateRun_UpdateSuccess(t *testing.T) {
 			ScheduledAtInSec: 1,
 			StorageState:     api.Run_STORAGESTATE_AVAILABLE.String(),
 			Conditions:       "done",
-			Metrics: []*model.RunMetric{
-				{
-					RunUUID:     "1",
-					NodeID:      "node1",
-					Name:        "dummymetric",
-					NumberValue: 1.0,
-					Format:      "PERCENTAGE",
-				},
-			},
 			ResourceReferences: []*model.ResourceReference{
 				{
 					ResourceUUID: "1", ResourceType: common.Run,
@@ -770,15 +559,6 @@ func TestCreateOrUpdateRun_BadStorageStateValue(t *testing.T) {
 			CreatedAtInSec:   1,
 			ScheduledAtInSec: 1,
 			Conditions:       "Running",
-			Metrics: []*model.RunMetric{
-				{
-					RunUUID:     "1",
-					NodeID:      "node1",
-					Name:        "dummymetric",
-					NumberValue: 1.0,
-					Format:      "PERCENTAGE",
-				},
-			},
 			ResourceReferences: []*model.ResourceReference{
 				{
 					ResourceUUID: "1", ResourceType: common.Run,
@@ -823,15 +603,6 @@ func TestTerminateRun(t *testing.T) {
 			ScheduledAtInSec: 1,
 			StorageState:     api.Run_STORAGESTATE_AVAILABLE.String(),
 			Conditions:       "Terminating",
-			Metrics: []*model.RunMetric{
-				{
-					RunUUID:     "1",
-					NodeID:      "node1",
-					Name:        "dummymetric",
-					NumberValue: 1.0,
-					Format:      "PERCENTAGE",
-				},
-			},
 			ResourceReferences: []*model.ResourceReference{
 				{
 					ResourceUUID: "1", ResourceType: common.Run,
@@ -881,16 +652,7 @@ func TestReportMetric_Success(t *testing.T) {
 
 	runDetail, err := runStore.GetRun("1")
 	assert.Nil(t, err, "Got error: %+v", err)
-	sort.Sort(RunMetricSorter(runDetail.Run.Metrics))
-	assert.Equal(t, []*model.RunMetric{
-		metric,
-		{
-			RunUUID:     "1",
-			NodeID:      "node1",
-			Name:        "dummymetric",
-			NumberValue: 1.0,
-			Format:      "PERCENTAGE",
-		}}, runDetail.Run.Metrics)
+	assert.Equal(t, []*model.RunMetric{metric}, runDetail.Run.Metrics)
 }
 
 func TestReportMetric_DupReports_Fail(t *testing.T) {
@@ -982,16 +744,7 @@ func TestListRuns_WithMetrics(t *testing.T) {
 					ReferenceType: common.Experiment, Relationship: common.Creator,
 				},
 			},
-			Metrics: []*model.RunMetric{
-				{
-					RunUUID:     "1",
-					NodeID:      "node1",
-					Name:        "dummymetric",
-					NumberValue: 1.0,
-					Format:      "PERCENTAGE",
-				},
-				metric1,
-				metric2},
+			Metrics: []*model.RunMetric{metric1, metric2},
 		},
 		{
 			UUID:             "2",
@@ -1009,29 +762,15 @@ func TestListRuns_WithMetrics(t *testing.T) {
 					ReferenceType: common.Experiment, Relationship: common.Creator,
 				},
 			},
-			Metrics: []*model.RunMetric{
-				{
-					RunUUID:     "2",
-					NodeID:      "node2",
-					Name:        "dummymetric",
-					NumberValue: 2.0,
-					Format:      "PERCENTAGE",
-				},
-				metric3},
+			Metrics: []*model.RunMetric{metric3},
 		},
 	}
 
-	opts, err := list.NewOptions(&model.Run{}, 2, "id", nil)
+	opts, err := list.NewOptions(&model.Run{}, 2, "", nil)
 	assert.Nil(t, err)
 	runs, total_size, _, err := runStore.ListRuns(&common.FilterContext{}, opts)
 	assert.Equal(t, 3, total_size)
 	assert.Nil(t, err)
-	for _, run := range expectedRuns {
-		sort.Sort(RunMetricSorter(run.Metrics))
-	}
-	for _, run := range runs {
-		sort.Sort(RunMetricSorter(run.Metrics))
-	}
 	assert.Equal(t, expectedRuns, runs, "Unexpected Run listed.")
 }
 
@@ -1127,15 +866,6 @@ func TestArchiveRun_IncludedInRunList(t *testing.T) {
 			ScheduledAtInSec: 1,
 			StorageState:     api.Run_STORAGESTATE_ARCHIVED.String(),
 			Conditions:       "Running",
-			Metrics: []*model.RunMetric{
-				{
-					RunUUID:     "1",
-					NodeID:      "node1",
-					Name:        "dummymetric",
-					NumberValue: 1.0,
-					Format:      "PERCENTAGE",
-				},
-			},
 			ResourceReferences: []*model.ResourceReference{
 				{
 					ResourceUUID: "1", ResourceType: common.Run,

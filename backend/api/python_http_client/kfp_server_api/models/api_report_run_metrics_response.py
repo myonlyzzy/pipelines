@@ -82,7 +82,7 @@ class ApiReportRunMetricsResponse(object):
 
 
         :param results: The results of this ApiReportRunMetricsResponse.  # noqa: E501
-        :type results: list[ReportRunMetricsResponseReportRunMetricResult]
+        :type: list[ReportRunMetricsResponseReportRunMetricResult]
         """
 
         self._results = results

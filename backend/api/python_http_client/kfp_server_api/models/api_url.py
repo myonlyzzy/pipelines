@@ -84,7 +84,7 @@ class ApiUrl(object):
         URL of the pipeline definition or the pipeline version definition.  # noqa: E501
 
         :param pipeline_url: The pipeline_url of this ApiUrl.  # noqa: E501
-        :type pipeline_url: str
+        :type: str
         """
 
         self._pipeline_url = pipeline_url

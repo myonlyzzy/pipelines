@@ -39,10 +39,6 @@ REQUIRES = [
     'strip-hints',
 ]
 
-TESTS_REQUIRE = [
-    'mock',
-]
-
 
 def find_version(*file_path_parts):
   here = os.path.abspath(os.path.dirname(__file__))
@@ -66,7 +62,6 @@ setup(
     description='KubeFlow Pipelines SDK',
     author='google',
     install_requires=REQUIRES,
-    tests_require=TESTS_REQUIRE,
     packages=[
         'kfp',
         'kfp.cli',
@@ -74,6 +69,7 @@ setup(
         'kfp.compiler',
         'kfp.components',
         'kfp.components.structures',
+        'kfp.components.structures.kubernetes',
         'kfp.containers',
         'kfp.dsl',
         'kfp.dsl.extensions',

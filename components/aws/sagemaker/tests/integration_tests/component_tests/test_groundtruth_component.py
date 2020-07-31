@@ -1,9 +1,11 @@
 import pytest
 import os
+import json
 import utils
 from utils import kfp_client_utils
 from utils import sagemaker_utils
 from test_workteam_component import create_workteamjob
+import time
 
 
 @pytest.mark.parametrize(
@@ -48,7 +50,7 @@ def test_groundtruth_labeling_job(
         test_params["Arguments"]["ground_truth_train_job_name"] + "-by-" + workteam_name
     )
 
-    run_id, _, _ = kfp_client_utils.compile_run_monitor_pipeline(
+    _ = kfp_client_utils.compile_run_monitor_pipeline(
         kfp_client,
         experiment_id,
         test_params["PipelineDefinition"],
@@ -76,16 +78,6 @@ def test_groundtruth_labeling_job(
             labeling_jobs["LabelingJobSummaryList"][0]["LabelingJobName"]
             == ground_truth_train_job_name
         )
-
-        # Test terminate functionality
-        print(
-            f"Terminating run: {run_id} where GT job_name: {ground_truth_train_job_name}"
-        )
-        kfp_client_utils.terminate_run(kfp_client, run_id)
-        response = sagemaker_utils.describe_labeling_job(
-            sagemaker_client, ground_truth_train_job_name
-        )
-        assert response["LabelingJobStatus"] in ["Stopping", "Stopped"]
     finally:
         # Cleanup the SageMaker Resources
         sagemaker_utils.stop_labeling_job(sagemaker_client, ground_truth_train_job_name)

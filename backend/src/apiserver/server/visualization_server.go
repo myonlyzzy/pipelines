@@ -14,7 +14,6 @@ import (
 	"github.com/kubeflow/pipelines/backend/src/apiserver/common"
 	"github.com/kubeflow/pipelines/backend/src/apiserver/resource"
 	"github.com/kubeflow/pipelines/backend/src/common/util"
-	"github.com/pkg/errors"
 )
 
 const (
@@ -79,8 +78,11 @@ func (s *VisualizationServer) validateCreateVisualizationRequest(request *go_cli
 // It returns the generated HTML as a string and any error that is encountered.
 func (s *VisualizationServer) generateVisualizationFromRequest(request *go_client.CreateVisualizationRequest) ([]byte, error) {
 	serviceURL := s.getVisualizationServiceURL(request)
-	if err := isVisualizationServiceAlive(serviceURL); err != nil {
-		return nil, util.Wrap(err, "Cannot generate visualization.")
+	if !isVisualizationServiceAlive(serviceURL) {
+		return nil, util.NewInternalServerError(
+			fmt.Errorf("service not available"),
+			"Service not available",
+		)
 	}
 	visualizationType := strings.ToLower(go_client.Visualization_Type_name[int32(request.Visualization.Type)])
 	urlValues := url.Values{
@@ -113,19 +115,13 @@ func (s *VisualizationServer) getVisualizationServiceURL(request *go_client.Crea
 	return s.serviceURL
 }
 
-func isVisualizationServiceAlive(serviceURL string) error {
+func isVisualizationServiceAlive(serviceURL string) bool {
 	resp, err := http.Get(serviceURL)
-
 	if err != nil {
-		wrappedErr := util.Wrap(err, fmt.Sprintf("Unable to verify visualization service aliveness by sending request to %s", serviceURL))
-		glog.Error(wrappedErr)
-		return wrappedErr
-	} else if resp.StatusCode != http.StatusOK {
-		wrappedErr := errors.New(fmt.Sprintf("Unable to verify visualization service aliveness by sending request to %s and get response code: %s !", serviceURL, resp.Status))
-		glog.Error(wrappedErr)
-		return wrappedErr
+		glog.Error("Unable to verify visualization service is alive!", err)
+		return false
 	}
-	return nil
+	return resp.StatusCode == http.StatusOK
 }
 
 func NewVisualizationServer(resourceManager *resource.ResourceManager, serviceHost string, servicePort string) *VisualizationServer {

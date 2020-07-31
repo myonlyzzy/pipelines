@@ -42,8 +42,6 @@ def _create_container_op_from_component_and_arguments(
 
     container_spec = component_spec.implementation.container
 
-    old_warn_value = dsl.ContainerOp._DISABLE_REUSABLE_COMPONENT_WARNING
-    dsl.ContainerOp._DISABLE_REUSABLE_COMPONENT_WARNING = True
     task = dsl.ContainerOp(
         name=component_spec.name or _default_component_name,
         image=container_spec.image,
@@ -59,7 +57,6 @@ def _create_container_op_from_component_and_arguments(
             for input_name, path in resolved_cmd.input_paths.items()
         ],
     )
-    dsl.ContainerOp._DISABLE_REUSABLE_COMPONENT_WARNING = old_warn_value
 
     component_meta = copy.copy(component_spec)
     task._set_metadata(component_meta)
@@ -87,13 +84,9 @@ def _create_container_op_from_component_and_arguments(
             task.container.add_env_variable(k8s_client.V1EnvVar(name=name, value=value))
 
     if component_spec.metadata:
-        annotations = component_spec.metadata.annotations or {}
-        for key, value in annotations.items():
+        for key, value in (component_spec.metadata.annotations or {}).items():
             task.add_pod_annotation(key, value)
         for key, value in (component_spec.metadata.labels or {}).items():
             task.add_pod_label(key, value)
-        # Disabling the caching for the volatile components by default
-        if annotations.get('volatile_component', 'false') == 'true':
-            task.execution_options.caching_strategy.max_cache_staleness = 'P0D'
 
     return task

@@ -55,14 +55,11 @@ class PipelineServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.create_pipeline(body, async_req=True)
         >>> result = thread.get()
 
-        :param body: (required)
-        :type body: ApiPipeline
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param ApiPipeline body: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -70,10 +67,9 @@ class PipelineServiceApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: ApiPipeline
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: ApiPipeline
         """
         kwargs['_return_http_data_only'] = True
         return self.create_pipeline_with_http_info(body, **kwargs)  # noqa: E501
@@ -83,29 +79,23 @@ class PipelineServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.create_pipeline_with_http_info(body, async_req=True)
         >>> result = thread.get()
 
-        :param body: (required)
-        :type body: ApiPipeline
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param ApiPipeline body: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
-        :type _return_http_data_only: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: tuple(ApiPipeline, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(ApiPipeline, status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()
@@ -181,14 +171,11 @@ class PipelineServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.create_pipeline_version(body, async_req=True)
         >>> result = thread.get()
 
-        :param body: ResourceReference inside PipelineVersion specifies the pipeline that this version belongs to. (required)
-        :type body: ApiPipelineVersion
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param ApiPipelineVersion body: ResourceReference inside PipelineVersion specifies the pipeline that this version belongs to. (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -196,10 +183,9 @@ class PipelineServiceApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: ApiPipelineVersion
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: ApiPipelineVersion
         """
         kwargs['_return_http_data_only'] = True
         return self.create_pipeline_version_with_http_info(body, **kwargs)  # noqa: E501
@@ -209,29 +195,23 @@ class PipelineServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.create_pipeline_version_with_http_info(body, async_req=True)
         >>> result = thread.get()
 
-        :param body: ResourceReference inside PipelineVersion specifies the pipeline that this version belongs to. (required)
-        :type body: ApiPipelineVersion
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param ApiPipelineVersion body: ResourceReference inside PipelineVersion specifies the pipeline that this version belongs to. (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
-        :type _return_http_data_only: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: tuple(ApiPipelineVersion, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(ApiPipelineVersion, status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()
@@ -307,14 +287,11 @@ class PipelineServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.delete_pipeline(id, async_req=True)
         >>> result = thread.get()
 
-        :param id: The ID of the pipeline to be deleted. (required)
-        :type id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str id: The ID of the pipeline to be deleted. (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -322,10 +299,9 @@ class PipelineServiceApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: object
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: object
         """
         kwargs['_return_http_data_only'] = True
         return self.delete_pipeline_with_http_info(id, **kwargs)  # noqa: E501
@@ -335,29 +311,23 @@ class PipelineServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.delete_pipeline_with_http_info(id, async_req=True)
         >>> result = thread.get()
 
-        :param id: The ID of the pipeline to be deleted. (required)
-        :type id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str id: The ID of the pipeline to be deleted. (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
-        :type _return_http_data_only: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: tuple(object, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(object, status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()
@@ -429,14 +399,11 @@ class PipelineServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.delete_pipeline_version(version_id, async_req=True)
         >>> result = thread.get()
 
-        :param version_id: The ID of the pipeline version to be deleted. (required)
-        :type version_id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str version_id: The ID of the pipeline version to be deleted. (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -444,10 +411,9 @@ class PipelineServiceApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: object
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: object
         """
         kwargs['_return_http_data_only'] = True
         return self.delete_pipeline_version_with_http_info(version_id, **kwargs)  # noqa: E501
@@ -457,29 +423,23 @@ class PipelineServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.delete_pipeline_version_with_http_info(version_id, async_req=True)
         >>> result = thread.get()
 
-        :param version_id: The ID of the pipeline version to be deleted. (required)
-        :type version_id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str version_id: The ID of the pipeline version to be deleted. (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
-        :type _return_http_data_only: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: tuple(object, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(object, status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()
@@ -551,14 +511,11 @@ class PipelineServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.get_pipeline(id, async_req=True)
         >>> result = thread.get()
 
-        :param id: The ID of the pipeline to be retrieved. (required)
-        :type id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str id: The ID of the pipeline to be retrieved. (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -566,10 +523,9 @@ class PipelineServiceApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: ApiPipeline
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: ApiPipeline
         """
         kwargs['_return_http_data_only'] = True
         return self.get_pipeline_with_http_info(id, **kwargs)  # noqa: E501
@@ -579,29 +535,23 @@ class PipelineServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.get_pipeline_with_http_info(id, async_req=True)
         >>> result = thread.get()
 
-        :param id: The ID of the pipeline to be retrieved. (required)
-        :type id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str id: The ID of the pipeline to be retrieved. (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
-        :type _return_http_data_only: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: tuple(ApiPipeline, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(ApiPipeline, status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()
@@ -673,14 +623,11 @@ class PipelineServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.get_pipeline_version(version_id, async_req=True)
         >>> result = thread.get()
 
-        :param version_id: The ID of the pipeline version to be retrieved. (required)
-        :type version_id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str version_id: The ID of the pipeline version to be retrieved. (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -688,10 +635,9 @@ class PipelineServiceApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: ApiPipelineVersion
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: ApiPipelineVersion
         """
         kwargs['_return_http_data_only'] = True
         return self.get_pipeline_version_with_http_info(version_id, **kwargs)  # noqa: E501
@@ -701,29 +647,23 @@ class PipelineServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.get_pipeline_version_with_http_info(version_id, async_req=True)
         >>> result = thread.get()
 
-        :param version_id: The ID of the pipeline version to be retrieved. (required)
-        :type version_id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str version_id: The ID of the pipeline version to be retrieved. (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
-        :type _return_http_data_only: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: tuple(ApiPipelineVersion, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(ApiPipelineVersion, status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()
@@ -795,14 +735,11 @@ class PipelineServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.get_pipeline_version_template(version_id, async_req=True)
         >>> result = thread.get()
 
-        :param version_id: The ID of the pipeline version whose template is to be retrieved. (required)
-        :type version_id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str version_id: The ID of the pipeline version whose template is to be retrieved. (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -810,10 +747,9 @@ class PipelineServiceApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: ApiGetTemplateResponse
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: ApiGetTemplateResponse
         """
         kwargs['_return_http_data_only'] = True
         return self.get_pipeline_version_template_with_http_info(version_id, **kwargs)  # noqa: E501
@@ -823,29 +759,23 @@ class PipelineServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.get_pipeline_version_template_with_http_info(version_id, async_req=True)
         >>> result = thread.get()
 
-        :param version_id: The ID of the pipeline version whose template is to be retrieved. (required)
-        :type version_id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str version_id: The ID of the pipeline version whose template is to be retrieved. (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
-        :type _return_http_data_only: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: tuple(ApiGetTemplateResponse, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(ApiGetTemplateResponse, status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()
@@ -917,14 +847,11 @@ class PipelineServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.get_template(id, async_req=True)
         >>> result = thread.get()
 
-        :param id: The ID of the pipeline whose template is to be retrieved. (required)
-        :type id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str id: The ID of the pipeline whose template is to be retrieved. (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -932,10 +859,9 @@ class PipelineServiceApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: ApiGetTemplateResponse
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: ApiGetTemplateResponse
         """
         kwargs['_return_http_data_only'] = True
         return self.get_template_with_http_info(id, **kwargs)  # noqa: E501
@@ -945,29 +871,23 @@ class PipelineServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.get_template_with_http_info(id, async_req=True)
         >>> result = thread.get()
 
-        :param id: The ID of the pipeline whose template is to be retrieved. (required)
-        :type id: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str id: The ID of the pipeline whose template is to be retrieved. (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
-        :type _return_http_data_only: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: tuple(ApiGetTemplateResponse, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(ApiGetTemplateResponse, status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()
@@ -1039,24 +959,16 @@ class PipelineServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.list_pipeline_versions(async_req=True)
         >>> result = thread.get()
 
-        :param resource_key_type: The type of the resource that referred to.
-        :type resource_key_type: str
-        :param resource_key_id: The ID of the resource that referred to.
-        :type resource_key_id: str
-        :param page_size: The number of pipeline versions to be listed per page. If there are more pipeline versions than this number, the response message will contain a nextPageToken field you can use to fetch the next page.
-        :type page_size: int
-        :param page_token: A page token to request the next page of results. The token is acquried from the nextPageToken field of the response from the previous ListPipelineVersions call or can be omitted when fetching the first page.
-        :type page_token: str
-        :param sort_by: Can be format of \"field_name\", \"field_name asc\" or \"field_name desc\" Ascending by default.
-        :type sort_by: str
-        :param filter: A base-64 encoded, JSON-serialized Filter protocol buffer (see filter.proto).
-        :type filter: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str resource_key_type: The type of the resource that referred to.
+        :param str resource_key_id: The ID of the resource that referred to.
+        :param int page_size: The number of pipeline versions to be listed per page. If there are more pipeline versions than this number, the response message will contain a nextPageToken field you can use to fetch the next page.
+        :param str page_token: A page token to request the next page of results. The token is acquried from the nextPageToken field of the response from the previous ListPipelineVersions call or can be omitted when fetching the first page.
+        :param str sort_by: Can be format of \"field_name\", \"field_name asc\" or \"field_name desc\" Ascending by default.
+        :param str filter: A base-64 encoded, JSON-serialized Filter protocol buffer (see filter.proto).
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -1064,10 +976,9 @@ class PipelineServiceApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: ApiListPipelineVersionsResponse
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: ApiListPipelineVersionsResponse
         """
         kwargs['_return_http_data_only'] = True
         return self.list_pipeline_versions_with_http_info(**kwargs)  # noqa: E501
@@ -1077,39 +988,28 @@ class PipelineServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.list_pipeline_versions_with_http_info(async_req=True)
         >>> result = thread.get()
 
-        :param resource_key_type: The type of the resource that referred to.
-        :type resource_key_type: str
-        :param resource_key_id: The ID of the resource that referred to.
-        :type resource_key_id: str
-        :param page_size: The number of pipeline versions to be listed per page. If there are more pipeline versions than this number, the response message will contain a nextPageToken field you can use to fetch the next page.
-        :type page_size: int
-        :param page_token: A page token to request the next page of results. The token is acquried from the nextPageToken field of the response from the previous ListPipelineVersions call or can be omitted when fetching the first page.
-        :type page_token: str
-        :param sort_by: Can be format of \"field_name\", \"field_name asc\" or \"field_name desc\" Ascending by default.
-        :type sort_by: str
-        :param filter: A base-64 encoded, JSON-serialized Filter protocol buffer (see filter.proto).
-        :type filter: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str resource_key_type: The type of the resource that referred to.
+        :param str resource_key_id: The ID of the resource that referred to.
+        :param int page_size: The number of pipeline versions to be listed per page. If there are more pipeline versions than this number, the response message will contain a nextPageToken field you can use to fetch the next page.
+        :param str page_token: A page token to request the next page of results. The token is acquried from the nextPageToken field of the response from the previous ListPipelineVersions call or can be omitted when fetching the first page.
+        :param str sort_by: Can be format of \"field_name\", \"field_name asc\" or \"field_name desc\" Ascending by default.
+        :param str filter: A base-64 encoded, JSON-serialized Filter protocol buffer (see filter.proto).
         :param _return_http_data_only: response data without head status code
                                        and headers
-        :type _return_http_data_only: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: tuple(ApiListPipelineVersionsResponse, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(ApiListPipelineVersionsResponse, status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()
@@ -1192,20 +1092,14 @@ class PipelineServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.list_pipelines(async_req=True)
         >>> result = thread.get()
 
-        :param page_token: A page token to request the next page of results. The token is acquried from the nextPageToken field of the response from the previous ListPipelines call.
-        :type page_token: str
-        :param page_size: The number of pipelines to be listed per page. If there are more pipelines than this number, the response message will contain a valid value in the nextPageToken field.
-        :type page_size: int
-        :param sort_by: Can be format of \"field_name\", \"field_name asc\" or \"field_name desc\" Ascending by default.
-        :type sort_by: str
-        :param filter: A url-encoded, JSON-serialized Filter protocol buffer (see [filter.proto](https://github.com/kubeflow/pipelines/ blob/master/backend/api/filter.proto)).
-        :type filter: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str page_token: A page token to request the next page of results. The token is acquried from the nextPageToken field of the response from the previous ListPipelines call.
+        :param int page_size: The number of pipelines to be listed per page. If there are more pipelines than this number, the response message will contain a valid value in the nextPageToken field.
+        :param str sort_by: Can be format of \"field_name\", \"field_name asc\" or \"field_name desc\" Ascending by default.
+        :param str filter: A url-encoded, JSON-serialized Filter protocol buffer (see [filter.proto](https://github.com/kubeflow/pipelines/ blob/master/backend/api/filter.proto)).
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -1213,10 +1107,9 @@ class PipelineServiceApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: ApiListPipelinesResponse
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: ApiListPipelinesResponse
         """
         kwargs['_return_http_data_only'] = True
         return self.list_pipelines_with_http_info(**kwargs)  # noqa: E501
@@ -1226,35 +1119,26 @@ class PipelineServiceApi(object):
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-
         >>> thread = api.list_pipelines_with_http_info(async_req=True)
         >>> result = thread.get()
 
-        :param page_token: A page token to request the next page of results. The token is acquried from the nextPageToken field of the response from the previous ListPipelines call.
-        :type page_token: str
-        :param page_size: The number of pipelines to be listed per page. If there are more pipelines than this number, the response message will contain a valid value in the nextPageToken field.
-        :type page_size: int
-        :param sort_by: Can be format of \"field_name\", \"field_name asc\" or \"field_name desc\" Ascending by default.
-        :type sort_by: str
-        :param filter: A url-encoded, JSON-serialized Filter protocol buffer (see [filter.proto](https://github.com/kubeflow/pipelines/ blob/master/backend/api/filter.proto)).
-        :type filter: str
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
+        :param async_req bool: execute request asynchronously
+        :param str page_token: A page token to request the next page of results. The token is acquried from the nextPageToken field of the response from the previous ListPipelines call.
+        :param int page_size: The number of pipelines to be listed per page. If there are more pipelines than this number, the response message will contain a valid value in the nextPageToken field.
+        :param str sort_by: Can be format of \"field_name\", \"field_name asc\" or \"field_name desc\" Ascending by default.
+        :param str filter: A url-encoded, JSON-serialized Filter protocol buffer (see [filter.proto](https://github.com/kubeflow/pipelines/ blob/master/backend/api/filter.proto)).
         :param _return_http_data_only: response data without head status code
                                        and headers
-        :type _return_http_data_only: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: Returns the result object.
+        :return: tuple(ApiListPipelinesResponse, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(ApiListPipelinesResponse, status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()

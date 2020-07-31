@@ -23,9 +23,6 @@ description: |-
         Raises:
             RuntimeError: If configuration is not setup properly and
             HALT_ON_ERROR flag is set.
-metadata:
-  annotations:
-    volatile_component: "true"
 inputs:
 - name: bucket
   type: String

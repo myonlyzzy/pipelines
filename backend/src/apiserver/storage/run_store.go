@@ -170,9 +170,8 @@ func (s *RunStore) buildSelectRunsQuery(selectCount bool, opts *list.Options,
 	// If we're not just counting, then also add select columns and perform a left join
 	// to get resource reference information. Also add pagination.
 	if !selectCount {
-		sqlBuilder = opts.AddSortByRunMetricToSelect(sqlBuilder)
 		sqlBuilder = opts.AddPaginationToSelect(sqlBuilder)
-		sqlBuilder = s.addMetricsAndResourceReferences(sqlBuilder, opts)
+		sqlBuilder = s.addMetricsAndResourceReferences(sqlBuilder)
 		sqlBuilder = opts.AddSortingToSelect(sqlBuilder)
 	}
 	sql, args, err := sqlBuilder.ToSql()
@@ -188,7 +187,7 @@ func (s *RunStore) GetRun(runId string) (*model.RunDetail, error) {
 		sq.Select(runColumns...).
 			From("run_details").
 			Where(sq.Eq{"UUID": runId}).
-			Limit(1), nil).
+			Limit(1)).
 		ToSql()
 
 	if err != nil {
@@ -214,39 +213,20 @@ func (s *RunStore) GetRun(runId string) (*model.RunDetail, error) {
 	return runs[0], nil
 }
 
-// Apply func f to every string in a given string slice.
-func Map(vs []string, f func(string) string) []string {
-	vsm := make([]string, len(vs))
-	for i, v := range vs {
-		vsm[i] = f(v)
-	}
-	return vsm
-}
-
-func (s *RunStore) addMetricsAndResourceReferences(filteredSelectBuilder sq.SelectBuilder, opts *list.Options) sq.SelectBuilder {
-	resourceRefConcatQuery := s.db.Concat([]string{`"["`, s.db.GroupConcat("rr.Payload", ","), `"]"`}, "")
-	columnsAfterJoiningResourceReferences := append(
-		Map(runColumns, func(column string) string { return "rd." + column }), // Add prefix "rd." to runColumns
-		resourceRefConcatQuery+" AS refs")
-	if opts != nil && opts.SortByFieldIsRunMetric {
-		columnsAfterJoiningResourceReferences = append(columnsAfterJoiningResourceReferences, "rd."+opts.SortByFieldName)
-	}
+func (s *RunStore) addMetricsAndResourceReferences(filteredSelectBuilder sq.SelectBuilder) sq.SelectBuilder {
+	metricConcatQuery := s.db.Concat([]string{`"["`, s.db.GroupConcat("m.Payload", ","), `"]"`}, "")
 	subQ := sq.
-		Select(columnsAfterJoiningResourceReferences...).
+		Select("rd.*", metricConcatQuery+" AS metrics").
 		FromSelect(filteredSelectBuilder, "rd").
-		LeftJoin("resource_references AS rr ON rr.ResourceType='Run' AND rd.UUID=rr.ResourceUUID").
+		LeftJoin("run_metrics AS m ON rd.UUID=m.RunUUID").
 		GroupBy("rd.UUID")
 
-	// TODO(jingzhang36): address the case where some runs don't have the metric used in order by.
-	metricConcatQuery := s.db.Concat([]string{`"["`, s.db.GroupConcat("rm.Payload", ","), `"]"`}, "")
-	columnsAfterJoiningRunMetrics := append(
-		Map(runColumns, func(column string) string { return "subq." + column }), // Add prefix "subq." to runColumns
-		"subq.refs",
-		metricConcatQuery+" AS metrics")
+	resourceRefConcatQuery := s.db.Concat([]string{`"["`, s.db.GroupConcat("r.Payload", ","), `"]"`}, "")
 	return sq.
-		Select(columnsAfterJoiningRunMetrics...).
+		Select("subq.*", resourceRefConcatQuery+" AS refs").
 		FromSelect(subQ, "subq").
-		LeftJoin("run_metrics AS rm ON subq.UUID=rm.RunUUID").
+		// Append all the resource references for the run as a json column
+		LeftJoin("resource_references AS r ON r.ResourceType='Run' AND subq.UUID=r.ResourceUUID").
 		GroupBy("subq.UUID")
 }
 
@@ -278,8 +258,8 @@ func (s *RunStore) scanRowsToRunDetails(rows *sql.Rows) ([]*model.RunDetail, err
 			&parameters,
 			&pipelineRuntimeManifest,
 			&workflowRuntimeManifest,
-			&resourceReferencesInString,
 			&metricsInString,
+			&resourceReferencesInString,
 		)
 		if err != nil {
 			glog.Errorf("Failed to scan row: %v", err)

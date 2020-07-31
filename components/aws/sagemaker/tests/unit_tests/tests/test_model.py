@@ -1,10 +1,13 @@
+import json
 import unittest
 
 from unittest.mock import patch, call, Mock, MagicMock, mock_open
 from botocore.exceptions import ClientError
+from datetime import datetime
 
 from model.src import create_model
 from common import _utils
+from . import test_utils
 
 
 required_args = [
@@ -12,8 +15,7 @@ required_args = [
   '--model_name', 'model_test',
   '--role', 'arn:aws:iam::123456789012:user/Development/product_1234/*',
   '--image', 'test-image',
-  '--model_artifact_url', 's3://fake-bucket/model_artifact',
-  '--model_name_output_path', '/tmp/output'
+  '--model_artifact_url', 's3://fake-bucket/model_artifact'
 ]
 
 class ModelTestCase(unittest.TestCase):
@@ -33,14 +35,19 @@ class ModelTestCase(unittest.TestCase):
     # Set some static returns
     create_model._utils.create_model.return_value = 'model_test'
 
-    create_model.main(required_args)
+    with patch('builtins.open', mock_open()) as file_open:
+      create_model.main(required_args)
 
     # Check if correct requests were created and triggered
     create_model._utils.create_model.assert_called()
 
     # Check the file outputs
-    create_model._utils.write_output.assert_has_calls([
-      call('/tmp/output', 'model_test')
+    file_open.assert_has_calls([
+      call('/tmp/model_name.txt', 'w')
+    ])
+
+    file_open().write.assert_has_calls([
+      call('model_test')
     ])
 
   def test_create_model(self):

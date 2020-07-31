@@ -63,19 +63,18 @@ def load_component(filename=None, url=None, text=None):
         raise ValueError('Need to specify a source')
 
 
-def load_component_from_url(url: str, auth=None):
+def load_component_from_url(url):
     '''
     Loads component from URL and creates a task factory function
     
     Args:
         url: The URL of the component file data
-        auth: Auth object for the requests library. See https://requests.readthedocs.io/en/master/user/authentication/
 
     Returns:
         A factory function with a strongly-typed signature.
         Once called with the required arguments, the factory constructs a pipeline task instance (ContainerOp).
     '''
-    component_spec = _load_component_spec_from_url(url, auth)
+    component_spec = _load_component_spec_from_url(url)
     url = _fix_component_uri(url)
     component_ref = ComponentReference(url=url)
     return _create_task_factory_from_component_spec(
@@ -133,14 +132,14 @@ def _load_component_spec_from_file(path) -> ComponentSpec:
         return _load_component_spec_from_yaml_or_zip_bytes(component_stream.read())
 
 
-def _load_component_spec_from_url(url: str, auth=None):
+def _load_component_spec_from_url(url: str):
     if url is None:
         raise TypeError
 
     url = _fix_component_uri(url)
 
     import requests
-    resp = requests.get(url, auth=auth)
+    resp = requests.get(url)
     resp.raise_for_status()
     return _load_component_spec_from_yaml_or_zip_bytes(resp.content)
 

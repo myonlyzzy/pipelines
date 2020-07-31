@@ -17,7 +17,6 @@ import argparse
 import os
 import requests
 import re
-import time
 
 from kubernetes import client
 
@@ -177,25 +176,10 @@ def deploy_model(
 
     KFServing = KFServingClient()
 
-    def create(kfsvc, model_name, namespace):
-        KFServing.create(kfsvc)
-        time.sleep(1)
-        KFServing.get(model_name, namespace=namespace, watch=True, timeout_seconds=120)
-
-    def update(kfsvc, model_name, namespace):
-        KFServing.patch(model_name, kfsvc)
-        time.sleep(1)
-        KFServing.get(model_name, namespace=namespace, watch=True, timeout_seconds=120)
-
     if action == "create":
-        create(kfsvc, model_name, namespace)
+        KFServing.create(kfsvc, watch=True, timeout_seconds=120)
     elif action == "update":
-        update(kfsvc, model_name, namespace)
-    elif action == "apply":
-        try:
-            create(kfsvc, model_name, namespace)
-        except:
-            update(kfsvc, model_name, namespace)
+        KFServing.patch(model_name, kfsvc)
     elif action == "rollout":
         KFServing.rollout_canary(
             model_name,

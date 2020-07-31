@@ -42,7 +42,6 @@ var (
 	mlPipelineServiceGRPCPort     string
 	namespace                     string
 	ttlSecondsAfterWorkflowFinish int64
-	numWorker                     int
 )
 
 const (
@@ -56,7 +55,6 @@ const (
 	mlPipelineAPIServerGRPCPortFlagName   = "mlPipelineServiceGRPCPort"
 	namespaceFlagName                     = "namespace"
 	ttlSecondsAfterWorkflowFinishFlagName = "ttlSecondsAfterWorkflowFinish"
-	numWorkerName                         = "numWorker"
 )
 
 func main() {
@@ -110,7 +108,7 @@ func main() {
 	go swfInformerFactory.Start(stopCh)
 	go workflowInformerFactory.Start(stopCh)
 
-	if err = controller.Run(numWorker, stopCh); err != nil {
+	if err = controller.Run(2, stopCh); err != nil {
 		log.Fatalf("Error running controller: %s", err.Error())
 	}
 }
@@ -127,5 +125,4 @@ func init() {
 		"/apis/v1beta1", "The base path for the ML pipeline API server.")
 	flag.StringVar(&namespace, namespaceFlagName, "", "The namespace name used for Kubernetes informers to obtain the listers.")
 	flag.Int64Var(&ttlSecondsAfterWorkflowFinish, ttlSecondsAfterWorkflowFinishFlagName, 604800 /* 7 days */, "The TTL for Argo workflow to persist after workflow finish.")
-	flag.IntVar(&numWorker, numWorkerName, 2, "Number of worker for sync job.")
 }
